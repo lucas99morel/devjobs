@@ -1,5 +1,5 @@
-{{-- The best way to take care of the future is to take care of the present moment. - Thich Nhat Hanh --}}
-<form action="" class="md:w-4/5 space-y-4" wire:submit.prevent='crearVacante' novalidate>
+{{-- Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less. - Maria Skłodowska-Curie --}}
+<form action="" class="md:w-4/5 space-y-4" wire:submit.prevent='editarVacante' novalidate>
     <div>
         <x-input-label for="titulo" :value="__('Titulo de la Vacante')" />
         <x-text-input 
@@ -82,35 +82,41 @@
         <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
     </div>
 
-    <div class="">
+    <div>
         <x-input-label for="imagen" :value="__('Imagen de Referencia')" />
         <x-text-input 
             id="imagen" 
             class="block mt-1 w-full" 
             type="file" 
-            wire:model="imagen"
+            wire:model="imagenNueva"
             accept="image/*"
         />
-        <div wire:loading.flex wire:target='imagen' class="my-2 gap-2 items-center">
-            <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-            </svg>
-            <p class="block font-medium text-lg text-gray-700 dark:text-gray-300">Cargando Imagen...</p>
+        <div class="sm:flex sm:justify-start sm:gap-4">
+            <div class="my-5 w-60">
+                <x-input-label :value="__('Imagen Actual:')" />
+                <img src="{{ asset('storage/vacantes/' . $imagen) }}" alt="{{ 'Imagen Vacante: ' . $titulo }}">
+            </div>
+
+            <div wire:loading.flex wire:target='imagenNueva' class="my-2 gap-2 items-center">
+                <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                <p class="block font-medium text-gray-700 dark:text-gray-300">Cargando imagen Nueva...</p>
+            </div>
+            
+            @if ($imagenNueva)
+                <div class="my-5 w-60">
+                    <p class="block font-medium text-sm text-gray-700 dark:text-gray-300">Imagen Nueva:</p>
+                    <img src="{{ $imagenNueva->temporaryUrl() }}" alt="PreviewImagenVacante">
+                </div>
+            @endif
         </div>
 
-        @if ($imagen)
-            <div class="my-2 w-60">
-                <p class="block font-medium text-sm text-gray-700 dark:text-gray-300">Preview:</p>
-                <img src="{{ $imagen->temporaryUrl() }}" alt="PreviewImagenVacante">
-            </div>
-        @endif
+        <x-input-error :messages="$errors->get('imagenNueva')" class="mt-2" />
+    </div>  
 
-        <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
-    </div>
-
-    <x-primary-button wire:loading.attr='disabled' wire:loading.class='opacity-30' wire:target='imagen'>
-        Crear Vacante
+    <x-primary-button wire:loading.attr='disabled' wire:loading.class='opacity-30' wire:target='imagenNueva'>
+        Guardar Cambios
     </x-primary-button>
 </form>
-

@@ -1,4 +1,4 @@
-<div class="mt-5">
+<div class="">
     <p 
         class="dark:text-white text-4xl font-bold">
         Dev<span 

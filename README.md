@@ -1,66 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DevJobs
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web de listado de ofertas de empleo: publicá vacantes, gestioná candidaturas y administrá el ciclo completo de una oferta laboral.
 
-## About Laravel
+Proyecto académico de desarrollo web con Laravel y Livewire.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Backend: Laravel 12 (PHP 8.2+)
+- Frontend: Livewire 4.3, Tailwind CSS 3, Alpine.js 3
+- Base de datos: MySQL
+- Autenticación: Laravel Breeze
+- Confirmaciones y alertas: SweetAlert2
+- Testing: Pest 4
+- Build de assets: Vite 6
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requisitos previos
 
-## Learning Laravel
+- PHP >= 8.2
+- Composer
+- Node.js y npm
+- MySQL/MariaDB
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalación
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Cloná el repositorio
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+git clone https://github.com/lucas99morel/devjobs.git
+cd devjobs
+```
 
-## Laravel Sponsors
+2. Instalá dependencias de PHP
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+composer install
+```
 
-### Premium Partners
+3. Instalá dependencias de Node
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```
+npm install
+```
 
-## Contributing
+4. Configurá el entorno
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Copiá el archivo de ejemplo y generá la key de la aplicación:
 
-## Code of Conduct
+```
+copy .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Editá las variables `DB_*` en `.env` con tus credenciales de MySQL y creá la base de datos manualmente antes de migrar.
 
-## Security Vulnerabilities
+5. Corré las migraciones
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+php artisan migrate --seed
+```
 
-## License
+6. Compilá los assets (CSS/JS)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+npm run build
+```
+
+7. Levantá la aplicación
+
+En dos terminales separadas:
+
+```
+php artisan serve
+```
+
+```
+npm run dev
+```
+
+8. Abrí el navegador en `http://localhost:8000`
+
+Nota: los comandos de este README están pensados para Windows CMD. Si usás PowerShell o una terminal Unix (Mac/Linux), algunos comandos (como copiar archivos) pueden variar.
+
+## Funcionalidades
+
+- Registro e inicio de sesión (Laravel Breeze)
+- Publicación y gestión de ofertas de empleo (CRUD)
+- Autorización por rol mediante Laravel Policies
+- Manejo global de excepciones de autorización
+- Confirmaciones de acciones destructivas con SweetAlert2
+- Envío de notificaciones por correo (Gmail SMTP)
+- Interfaz reactiva con Livewire (sin recargar la página)
+- Modo oscuro (dark mode)

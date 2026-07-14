@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Vacante;
+use Livewire\Attributes\On;
+use Livewire\Component;
+
+class HomeVacante extends Component
+{       
+    public $termino;
+    public $salario;
+    public $categoria;
+
+    #[On('terminosBusqueda')]
+    public function buscar($termino, $categoria, $salario){
+        $this->termino = $termino;
+        $this->salario = $salario;
+        $this->categoria = $categoria;
+    }
+
+    public function render()
+    {
+        $vacantes = Vacante::when($this->termino, function($query) {
+            $query->where('titulo','LIKE',"%" . $this->termino . "%");
+        })
+        ->when($this->termino, function($query) {
+            $query->orWhere('empresa','LIKE',"%" . $this->termino . "%");
+        })
+        ->when($this->categoria, function($query){
+            $query->where('categoria_id', $this->categoria);
+        })        
+        ->when($this->salario, function($query){
+            $query->where('salario_id', $this->salario);
+        })
+        ->orderBy('created_at','DESC')->get();
+
+        return view('livewire.home-vacante',[
+            'vacantes' => $vacantes
+        ]);
+    }
+}
